@@ -17,14 +17,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install Gradle
+      - name: Install and Build
         run: |
-          wget https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          # Скачиваем Gradle 8.7
+          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q gradle-8.7-bin.zip
-          echo "$PWD/gradle-8.7/bin" >> $GITHUB_PATH
-
-      - name: Build with Gradle
-        run: gradle assembleDebug
+          # Устанавливаем путь
+          export GRADLE_HOME=$PWD/gradle-8.7
+          export PATH=$GRADLE_HOME/bin:$PATH
+          # Запускаем сборку напрямую через gradle, минуя gradlew
+          gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
