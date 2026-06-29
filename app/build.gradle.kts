@@ -1,39 +1,26 @@
-package com.example.aiphotoeditor // Проверь, что это имя пакета совпадает с твоим проектом
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
 
-import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.google.ai.client.generativeai.GenerativeModel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+android {
+    namespace = "com.example.aiphotoeditor"
+    compileSdk = 34
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        // Подключаем кнопки и текст из твоего XML
-        val btn = findViewById<Button>(R.id.btn_process_ai)
-        val tv = findViewById<TextView>(R.id.tv_ai_result)
-
-        btn.setOnClickListener {
-            tv.text = "Обработка..."
-            
-            MainScope().launch {
-                try {
-                    // Используем ОФИЦИАЛЬНЫЙ SDK. Никакого Retrofit!
-                    val model = GenerativeModel(
-                        modelName = "gemini-1.5-flash",
-                        apiKey = "ТВОЙ_КЛЮЧ" // Вставь сюда свой API ключ
-                    )
-                    
-                    val response = model.generateContent("Привет, ты работаешь?")
-                    tv.text = response.text
-                } catch (e: Exception) {
-                    tv.text = "Ошибка: ${e.message}"
-                }
-            }
-        }
+    defaultConfig {
+        applicationId = "com.example.aiphotoeditor"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
+}
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    
+    // Оставляем только то, что нужно для Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
 }
