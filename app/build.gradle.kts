@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.aiphotoeditor"
+    namespace = "com.example.aiphotoeditor" // Убедитесь, что это совпадает с вашим package
     compileSdk = 34
 
     defaultConfig {
@@ -20,9 +20,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     
-    // Вот эти две строчки - всё, что нужно для ИИ
+    // Это всё, что нужно для Gemini
     implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
-    implementation("androidx.activity:activity-ktx:1.9.0")
 }
