@@ -1,0 +1,6 @@
+{
+  "name": "AI Фото Редактор",
+  "description": "Приложение для обработки фотографий с помощью AI с темной темой, позволяющее выбирать снимки из галереи и накладывать улучшения, стилизации и реалистичные эффекты с помощью Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
