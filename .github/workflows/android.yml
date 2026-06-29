@@ -17,15 +17,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install and Build
+      - name: Build with Fixed Gradle 8.7
         run: |
-          # Скачиваем Gradle 8.7
+          # 1. Удаляем любые попытки запуска wrapper'а
+          rm -f gradlew
+          # 2. Скачиваем конкретную версию 8.7
           wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q gradle-8.7-bin.zip
-          # Устанавливаем путь
-          export GRADLE_HOME=$PWD/gradle-8.7
-          export PATH=$GRADLE_HOME/bin:$PATH
-          # Запускаем сборку напрямую через gradle, минуя gradlew
+          # 3. Добавляем ее в PATH
+          export PATH=$PWD/gradle-8.7/bin:$PATH
+          # 4. Проверяем версию
+          gradle --version
+          # 5. Запускаем сборку
           gradle assembleDebug
 
       - name: Upload APK
