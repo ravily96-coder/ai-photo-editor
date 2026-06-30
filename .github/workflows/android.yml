@@ -11,24 +11,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Set up JDK 17
+      - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Force Clean Build
+      - name: Build with Fixed Gradle 8.5
         run: |
-          # 1. Удаляем все кэши Gradle, которые могли остаться от прошлых попыток
+          # Полная очистка
           rm -rf ~/.gradle/caches
-          # 2. Скачиваем проверенную версию 8.5
+          rm -f gradlew
+          
+          # Скачиваем и распаковываем
           wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
           unzip -q gradle-8.5-bin.zip
-          # 3. Добавляем ее в PATH, чтобы она была ПЕРВОЙ в списке
-          export PATH=$PWD/gradle-8.5/bin:$PATH
-          # 4. Проверяем версию
+          
+          # Устанавливаем в PATH
+          export GRADLE_HOME=$PWD/gradle-8.5
+          export PATH=$GRADLE_HOME/bin:$PATH
+          
+          # Проверка версии и сборка
           gradle --version
-          # 5. Запускаем сборку
           gradle assembleDebug
 
       - name: Upload APK
