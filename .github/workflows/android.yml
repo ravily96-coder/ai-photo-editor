@@ -11,21 +11,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: set up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Fixed Gradle 8.7
+      - name: Force Clean Build
         run: |
-          # 1. Удаляем любые попытки запуска wrapper'а
-          rm -f gradlew
-          # 2. Скачиваем конкретную версию 8.7
-          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
-          unzip -q gradle-8.7-bin.zip
-          # 3. Добавляем ее в PATH
-          export PATH=$PWD/gradle-8.7/bin:$PATH
+          # 1. Удаляем все кэши Gradle, которые могли остаться от прошлых попыток
+          rm -rf ~/.gradle/caches
+          # 2. Скачиваем проверенную версию 8.5
+          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
+          unzip -q gradle-8.5-bin.zip
+          # 3. Добавляем ее в PATH, чтобы она была ПЕРВОЙ в списке
+          export PATH=$PWD/gradle-8.5/bin:$PATH
           # 4. Проверяем версию
           gradle --version
           # 5. Запускаем сборку
