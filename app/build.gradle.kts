@@ -36,6 +36,3 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
 }
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.ai.client.generativeai:generativeai:0.4.0")
-}
