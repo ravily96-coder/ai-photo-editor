@@ -11,33 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: set up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Fixed Gradle 8.5
-        run: |
-          # Полная очистка
-          rm -rf ~/.gradle/caches
-          rm -f gradlew
-          
-          # Скачиваем и распаковываем
-          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
-          unzip -q gradle-8.5-bin.zip
-          
-          # Устанавливаем в PATH
-          export GRADLE_HOME=$PWD/gradle-8.5
-          export PATH=$GRADLE_HOME/bin:$PATH
-          
-          # Проверка версии и сборка
-          gradle --version
-          gradle assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: |
-            **/build/outputs/apk/debug/*.apk
+      - name: Build with Gradle
+        # Прямой вызов gradle с принудительным использованием нашей версии
+        run: ./gradlew assembleDebug --gradle-version 8.5
