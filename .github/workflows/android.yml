@@ -1,31 +1,21 @@
 name: Android CI
-
-on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
-
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Build with Explicit Gradle 8.5
+      - name: Manual Build
         run: |
-          # 1. Скачиваем чистый Gradle 8.5
+          # Полностью стираем старые настройки wrapper, чтобы они не мешали
+          rm -rf gradle/
+          rm -f gradlew
+          # Скачиваем Gradle 8.5
           wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
           unzip -q gradle-8.5-bin.zip
-          
-          # 2. Удаляем старые файлы обертки, чтобы они не мешали
-          rm -rf gradle/wrapper/gradle-wrapper.properties
-          rm -f gradlew
-          
-          # 3. Запускаем сборку через прямой путь к бинарному файлу 8.5
+          # Прямой вызов
           ./gradle-8.5/bin/gradle assembleDebug
