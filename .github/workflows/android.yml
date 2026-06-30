@@ -17,10 +17,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Fixed Gradle 8.5
+      - name: Build with Gradle
         run: |
-          rm -rf ~/.gradle/caches
+          # Скачиваем Gradle 8.5 и используем его напрямую, игнорируя всё, что есть в проекте
           wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
           unzip -q gradle-8.5-bin.zip
-          export PATH=$PWD/gradle-8.5/bin:$PATH
-          gradle assembleDebug
+          ./gradle-8.5/bin/gradle assembleDebug
