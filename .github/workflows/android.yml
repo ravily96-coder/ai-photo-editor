@@ -10,12 +10,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Manual Build
-        run: |
-          # Полностью стираем старые настройки wrapper, чтобы они не мешали
-          rm -rf gradle/
-          rm -f gradlew
-          # Скачиваем Gradle 8.5
-          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
-          unzip -q gradle-8.5-bin.zip
-          # Прямой вызов
-          ./gradle-8.5/bin/gradle assembleDebug
+        run: run: ./gradlew assembleDebug
+          
