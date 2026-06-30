@@ -17,9 +17,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Gradle
+      - name: Build with Explicit Gradle 8.5
         run: |
-          # Скачиваем Gradle 8.5 и используем его напрямую, игнорируя всё, что есть в проекте
+          # 1. Скачиваем чистый Gradle 8.5
           wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
           unzip -q gradle-8.5-bin.zip
+          
+          # 2. Удаляем старые файлы обертки, чтобы они не мешали
+          rm -rf gradle/wrapper/gradle-wrapper.properties
+          rm -f gradlew
+          
+          # 3. Запускаем сборку через прямой путь к бинарному файлу 8.5
           ./gradle-8.5/bin/gradle assembleDebug
